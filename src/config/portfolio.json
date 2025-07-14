@@ -23,7 +23,7 @@
     },
     {
         "title": "Utilizing Prefix and Postfix Evaluation Algorithm in numeric string calculation",
-        "image": "projects/elegance-orm.png",
+        "image": "projects/algorithm.jpeg",
         "description": "The core focus is to apply this algorithm to parse and compute complex mathematical expressions.",
         "tech_stack": [
             "JavaScript"
