@@ -1,0 +1,23 @@
+[
+    {
+        "company": "Caring Code Creation Ltd",
+        "position": "Fullstack Engineer",
+        "from_date": "Mar 2024",
+        "to_date": "Present",
+        "description": "Contributed to end-to-end development, designing scalable architecture and implementing both frontend and backend."
+    },
+    {
+        "company": "Tunyat Co,. Ltd",
+        "position": "Fullstack Engineer",
+        "from_date": "Jan 2023",
+        "to_date": "Feb 2024",
+        "description": "Helped design and develop Myanmar's first agricultural funding and marketplace platform for farmers."
+    },
+    {
+        "company": "Blue Ocean Co,. Ltd",
+        "position": "Junior Software Engineer",
+        "from_date": "Nov 2021",
+        "to_date": "Dec 2022",
+        "description": "Developed and maintained in-house web applications integrated with widely-used payment gateway platforms."
+    }
+]
