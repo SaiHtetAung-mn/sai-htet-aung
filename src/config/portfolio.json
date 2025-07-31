@@ -32,7 +32,7 @@
         "demo_url": "https://saihtetaung-mn.github.io/calculator-with-algorithm/"
     },
     {
-        "title": "Portfolio",
+        "title": "Portfolio Website",
         "image": "projects/portfolio.png",
         "description": "My personal portfolio website.",
         "tech_stack": [
@@ -41,6 +41,6 @@
             "Vite"
         ],
         "code_url": "https://github.com/SaiHtetAung-mn/sai-htet-aung",
-        "demo_url": "https://saihtetaung-mn.github.io/calculator-with-algorithm/"
+        "demo_url": "https://sai-htet-aung-pxv9.vercel.app/"
     }
 ]

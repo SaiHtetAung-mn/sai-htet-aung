@@ -7,7 +7,7 @@ const PortfolioPage = () => {
 
   return (
     <MotionContainer id="portfolio">
-      <div className="max-w-6xl w-full">
+      <div className="max-w-6xl w-full mb-12">
         <MotionItem
           as="h2"
           variant
