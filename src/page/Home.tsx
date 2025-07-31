@@ -1,20 +1,16 @@
 import { useEffect, useState } from "react";
 import MotionContainer from "../components/MotionContainer";
 import MotionItem from "../components/MotionItem";
-import { ChevronDown, Github, Linkedin, Mail, Award, Globe, Code, Download } from 'lucide-react';
+import { ChevronDown, Github, Linkedin, Mail } from 'lucide-react';
 import personalInfo from "../config/personal-info.json";
 import MyImage from "../assets/images/me-1.jpeg";
 
 const HomePage = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const [showDescription, setShowDescription] = useState(false);
-  const [showResume, setShowResume] = useState(false);
-  const [showStats, setShowStats] = useState(false);
   const [showSocial, setShowSocial] = useState(false);
   const [showScroll, setShowScroll] = useState(false);
 
   const fullName = "Sai Htet Aung";
-  const fullTitle = "Full Stack Engineer";
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -22,17 +18,11 @@ const HomePage = () => {
     }, 500);
 
     // Sequential animation triggers
-    const descriptionTimer = setTimeout(() => setShowDescription(true), 2500);
-    const resumeTimer = setTimeout(() => setShowResume(true), 3200);
-    const statsTimer = setTimeout(() => setShowStats(true), 3900);
     const socialTimer = setTimeout(() => setShowSocial(true), 4600);
     const scrollTimer = setTimeout(() => setShowScroll(true), 5300);
 
     return () => {
       clearTimeout(timer);
-      clearTimeout(descriptionTimer);
-      clearTimeout(resumeTimer);
-      clearTimeout(statsTimer);
       clearTimeout(socialTimer);
       clearTimeout(scrollTimer);
     };

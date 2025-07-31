@@ -30,5 +30,17 @@
         ],
         "code_url": "https://github.com/SaiHtetAung-mn/calculator-with-algorithm",
         "demo_url": "https://saihtetaung-mn.github.io/calculator-with-algorithm/"
+    },
+    {
+        "title": "Portfolio",
+        "image": "projects/portfolio.png",
+        "description": "My personal portfolio website.",
+        "tech_stack": [
+            "Tytpescript",
+            "ReactJs",
+            "Vite"
+        ],
+        "code_url": "https://github.com/SaiHtetAung-mn/sai-htet-aung",
+        "demo_url": "https://saihtetaung-mn.github.io/calculator-with-algorithm/"
     }
 ]
