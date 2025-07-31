@@ -33,7 +33,7 @@ const skills = [
 const SkillPage = () => {
   return (
     <MotionContainer id="skill">
-      <div className="max-w-6xl w-full">
+      <div className="max-w-6xl w-full pb-12">
         <MotionItem
           as="h2"
           variant

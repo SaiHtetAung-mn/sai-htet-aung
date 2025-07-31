@@ -5,10 +5,11 @@ import MotionItem from "../components/MotionItem";
 
 const navItems = [
   { id: 'home', label: 'Home' },
+  { id: 'experience', label: 'Experience' },
   { id: 'about', label: 'About' },
+  { id: 'education', label: 'Education' },
   { id: 'skill', label: 'Skills' },
   { id: 'portfolio', label: 'Portfolio' },
-  { id: 'experience', label: 'Experience' },
   { id: 'contact', label: 'Contact' }
 ];
 

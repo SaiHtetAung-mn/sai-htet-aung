@@ -1,11 +1,6 @@
 import type { JSX } from "react";
 import { motion, type HTMLMotionProps } from "framer-motion";
 
-// const itemVariants = {
-//   hidden: { opacity: 0, y: 20 },
-//   visible: { opacity: 1, y: 0 }
-// };
-
 type Props<T extends keyof JSX.IntrinsicElements = "div"> = {
   className?: string;
   variant?: boolean;

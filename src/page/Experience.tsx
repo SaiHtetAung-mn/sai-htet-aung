@@ -6,7 +6,7 @@ const ExperiencePage = () => {
 
   return (
     <MotionContainer id="experience">
-      <div className="max-w-4xl w-full">
+      <div className="max-w-4xl w-full pb-12">
         <MotionItem
           as="h2"
           variant

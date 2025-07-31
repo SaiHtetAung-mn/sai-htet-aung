@@ -9,6 +9,7 @@ import PortfolioPage from "./Portfolio";
 import ExperiencePage from "./Experience";
 import ContactPage from "./Contact";
 import MotionItem from "../components/MotionItem";
+import EducationPage from "./Education";
 
 const LandingPage = () => {
   const [currentPage, setCurrentPage] = useState(0);
@@ -18,10 +19,11 @@ const LandingPage = () => {
 
   const pages = [
     { component: HomePage, key: 'home', id: 'home' },
+    { component: ExperiencePage, key: 'experience', id: 'experience' },
     { component: AboutPage, key: 'about', id: 'about' },
+    { component: EducationPage, key: 'education', id: 'education' },
     { component: SkillPage, key: 'skills', id: 'skill' },
     { component: PortfolioPage, key: 'portfolio', id: 'portfolio' },
-    { component: ExperiencePage, key: 'experience', id: 'experience' },
     { component: ContactPage, key: 'contact', id: 'contact' }
   ];
 
@@ -42,7 +44,7 @@ const LandingPage = () => {
 
     // Listen for hash changes (navigation clicks)
     window.addEventListener('hashchange', handleHashChange);
-    
+
     // Check initial hash
     handleHashChange();
 
@@ -56,45 +58,52 @@ const LandingPage = () => {
   // Enhanced scroll and keyboard navigation
   useEffect(() => {
     let touchStartY = 0;
-  let touchEndY = 0;
+    let touchEndY = 0;
 
-  const handleTouchStart = (e: TouchEvent) => {
-    touchStartY = e.touches[0].clientY;
-  };
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartY = e.touches[0].clientY;
+    };
 
-  const handleTouchMove = (e: TouchEvent) => {
-    touchEndY = e.touches[0].clientY;
-  };
+    const handleTouchMove = (e: TouchEvent) => {
+      touchEndY = e.touches[0].clientY;
+    };
 
-  const handleTouchEnd = () => {
-    const distance = touchStartY - touchEndY;
+    const handleTouchEnd = () => {
+      const distance = touchStartY - touchEndY;
+      const container = pageContainerRef.current;
 
-    if (Math.abs(distance) < 50 || isScrolling) return;
+      if (!container || isScrolling) return;
 
-    setIsScrolling(true);
+      const { scrollTop, scrollHeight, clientHeight } = container;
+      const isAtTop = scrollTop === 0;
+      const isAtBottom = Math.abs(scrollHeight - clientHeight - scrollTop) < 1;
+      const hasScrollableContent = scrollHeight > clientHeight;
 
-    if (distance > 0 && currentPage < pages.length - 1) {
-      // swipe up
-      const newPage = currentPage + 1;
-      setCurrentPage(newPage);
-      window.history.pushState(null, '', `#${pages[newPage].id}`);
-    } else if (distance < 0 && currentPage > 0) {
-      // swipe down
-      const newPage = currentPage - 1;
-      setCurrentPage(newPage);
-      window.history.pushState(null, '', `#${pages[newPage].id}`);
-    }
+      const shouldSwipeDown = distance < -50 && (isAtTop || !hasScrollableContent);
+      const shouldSwipeUp = distance > 50 && (isAtBottom || !hasScrollableContent);
 
-    setTimeout(() => setIsScrolling(false), 600);
-  };
+      if (shouldSwipeUp && currentPage < pages.length - 1) {
+        setIsScrolling(true);
+        const newPage = currentPage + 1;
+        setCurrentPage(newPage);
+        window.history.pushState(null, '', `#${pages[newPage].id}`);
+        setTimeout(() => setIsScrolling(false), 600);
+      } else if (shouldSwipeDown && currentPage > 0) {
+        setIsScrolling(true);
+        const newPage = currentPage - 1;
+        setCurrentPage(newPage);
+        window.history.pushState(null, '', `#${pages[newPage].id}`);
+        setTimeout(() => setIsScrolling(false), 600);
+      }
+    };
 
-  window.addEventListener("touchstart", handleTouchStart);
-  window.addEventListener("touchmove", handleTouchMove);
-  window.addEventListener("touchend", handleTouchEnd);
+    window.addEventListener("touchstart", handleTouchStart);
+    window.addEventListener("touchmove", handleTouchMove);
+    window.addEventListener("touchend", handleTouchEnd);
 
     const handleWheel = (e: any) => {
       if (isScrolling) return;
-      
+
       const container = pageContainerRef.current;
       if (!container) return;
 
@@ -111,12 +120,12 @@ const LandingPage = () => {
       // Only navigate between pages if:
       // 1. Content is not scrollable, OR
       // 2. Content is scrollable but user is at top/bottom boundary
-      if (!hasScrollableContent || 
-          (hasScrollableContent && ((e.deltaY > 0 && isAtBottom) || (e.deltaY < 0 && isAtTop)))) {
-        
+      if (!hasScrollableContent ||
+        (hasScrollableContent && ((e.deltaY > 0 && isAtBottom) || (e.deltaY < 0 && isAtTop)))) {
+
         e.preventDefault();
         setIsScrolling(true);
-        
+
         if (e.deltaY > 0 && currentPage < pages.length - 1) {
           const newPage = currentPage + 1;
           setCurrentPage(newPage);
@@ -126,14 +135,14 @@ const LandingPage = () => {
           setCurrentPage(newPage);
           window.history.pushState(null, '', `#${pages[newPage].id}`);
         }
-        
+
         setTimeout(() => setIsScrolling(false), 500);
       }
     };
 
     const handleKeyDown = (e: any) => {
       if (isScrolling) return;
-      
+
       // Only handle page navigation keys if we're at content boundaries
       if (e.key === 'ArrowDown' || e.key === 'PageDown') {
         const container = pageContainerRef.current;
@@ -141,7 +150,7 @@ const LandingPage = () => {
           const { scrollTop, scrollHeight, clientHeight } = container;
           const isAtBottom = Math.abs(scrollHeight - clientHeight - scrollTop) < 1;
           const hasScrollableContent = scrollHeight > clientHeight;
-          
+
           if (!hasScrollableContent || isAtBottom) {
             if (currentPage < pages.length - 1) {
               e.preventDefault();
@@ -159,7 +168,7 @@ const LandingPage = () => {
           const { scrollTop, scrollHeight, clientHeight } = container;
           const isAtTop = scrollTop === 0;
           const hasScrollableContent = scrollHeight > clientHeight;
-          
+
           if (!hasScrollableContent || isAtTop) {
             if (currentPage > 0) {
               e.preventDefault();
@@ -182,8 +191,8 @@ const LandingPage = () => {
       window.removeEventListener('keydown', handleKeyDown);
 
       window.removeEventListener("touchstart", handleTouchStart);
-    window.removeEventListener("touchmove", handleTouchMove);
-    window.removeEventListener("touchend", handleTouchEnd);
+      window.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("touchend", handleTouchEnd);
     };
   }, [currentPage, isScrolling, pages.length]);
 
@@ -236,20 +245,19 @@ const LandingPage = () => {
         animate={{ scaleX: (currentPage + 1) / pages.length }}
         transition={{ duration: 0.5 }}
       />
-      
+
       <CursorFollower />
       <Navigation activeSection={activeSection} />
-      
+
       {/* Page Indicators */}
       <div className="fixed right-8 top-1/2 transform -translate-y-1/2 z-40 space-y-3">
         {pages.map((_, index) => (
           <MotionItem
             key={index}
-            className={`w-2 h-2 rounded-full transition-all duration-300 cursor-pointer ${
-              currentPage === index
-                ? 'bg-purple-500 scale-125'
-                : 'bg-gray-600 hover:bg-gray-400'
-            }`}
+            className={`w-2 h-2 rounded-full transition-all duration-300 cursor-pointer ${currentPage === index
+              ? 'bg-purple-500 scale-125'
+              : 'bg-gray-600 hover:bg-gray-400'
+              }`}
             onClick={() => {
               setCurrentPage(index);
               window.history.pushState(null, '', `#${pages[index].id}`);
@@ -271,7 +279,7 @@ const LandingPage = () => {
             exit="exit"
             className="h-full"
           >
-            <div 
+            <div
               ref={pageContainerRef}
               className="h-full overflow-y-auto scrollbar-hide"
               style={{
