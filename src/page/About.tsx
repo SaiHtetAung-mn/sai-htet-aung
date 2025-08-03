@@ -68,7 +68,7 @@ const AboutPage = () => {
             {
               icon: Award,
               title: 'Experience',
-              value: '4+ Years',
+              value: '3+ Years',
               description: 'Professional Development'
             },
             {
@@ -97,11 +97,11 @@ const AboutPage = () => {
                 <div className="absolute inset-0 bg-gradient-to-br from-purple-600/10 to-pink-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
 
                 <div className="relative z-10">
-                  {/* <div className="flex justify-center mb-4">
+                  <div className="flex justify-center mb-4">
                     <div className="p-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full">
                       <item.icon size={24} className="text-white" />
                     </div>
-                  </div> */}
+                  </div>
                   <h3 className="text-lg font-semibold text-white mb-2">{item.title}</h3>
                   <div className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-2">
                     {item.value}
