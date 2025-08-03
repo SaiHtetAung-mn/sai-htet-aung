@@ -1,9 +1,22 @@
+import { useState } from "react";
 import MotionContainer from "../components/MotionContainer";
 import MotionItem from "../components/MotionItem";
 import MyImage from "../assets/images/me-2.jpeg";
 import { Award, Globe, Code } from 'lucide-react';
 
 const AboutPage = () => {
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageError, setImageError] = useState(false);
+
+  const handleImageLoad = () => {
+    setImageLoaded(true);
+  };
+
+  const handleImageError = () => {
+    setImageError(true);
+    setImageLoaded(true);
+  };
+
   return (
     <MotionContainer id="about">
       <div className="max-w-4xl">
@@ -22,15 +35,37 @@ const AboutPage = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: 'easeOut' }}
             whileHover={{ scale: 1.03, rotate: 1 }}
-            className="rounded-2xl shadow-2xl overflow-hidden"
+            className="rounded-2xl shadow-2xl overflow-hidden relative"
           >
+            {/* Show skeleton while image is loading */}
+            {!imageLoaded && <ImageSkeleton />}
+            
+            {/* Actual image */}
             <img
               src={MyImage}
               alt="About Sai"
-              className="w-full h-auto object-cover rounded-2xl"
+              className={`w-full h-auto object-cover rounded-2xl transition-opacity duration-500 ${
+                imageLoaded ? 'opacity-100' : 'opacity-0 absolute inset-0'
+              }`}
+              onLoad={handleImageLoad}
+              onError={handleImageError}
+              loading="lazy"
             />
+            
+            {/* Error state */}
+            {imageError && imageLoaded && (
+              <div className="w-full aspect-[4/5] bg-gradient-to-br from-gray-800 to-gray-700 rounded-2xl flex items-center justify-center">
+                <div className="text-center text-gray-400">
+                  <div className="w-16 h-16 bg-gray-600 rounded-full mb-4 mx-auto flex items-center justify-center">
+                    <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                  </div>
+                  <p className="text-sm">Image unavailable</p>
+                </div>
+              </div>
+            )}
           </MotionItem>
-
 
           <MotionItem variant className="space-y-6">
             <p className="text-lg text-gray-300 leading-relaxed">
@@ -113,8 +148,37 @@ const AboutPage = () => {
           ))}
         </MotionItem>
       </div>
+
+      <style>{`
+        @keyframes shimmer {
+          0% {
+            transform: translateX(-100%);
+          }
+          100% {
+            transform: translateX(100%);
+          }
+        }
+      `}</style>
     </MotionContainer>
   )
 }
+
+const ImageSkeleton = () => (
+  <div className="w-full aspect-[4/5] bg-gradient-to-br from-gray-800 to-gray-700 rounded-2xl animate-pulse relative overflow-hidden">
+    {/* Shimmer effect */}
+    <div className="absolute inset-0 -translate-x-full animate-[shimmer_2s_infinite] bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
+    
+    {/* Profile placeholder */}
+    <div className="absolute inset-0 flex items-center justify-center">
+      <div className="w-24 h-24 bg-gray-600 rounded-full animate-pulse"></div>
+    </div>
+    
+    {/* Additional skeleton elements */}
+    <div className="absolute bottom-6 left-6 right-6 space-y-3">
+      <div className="h-4 bg-gray-600 rounded animate-pulse"></div>
+      <div className="h-4 bg-gray-600 rounded w-3/4 animate-pulse"></div>
+    </div>
+  </div>
+);
 
 export default AboutPage;
