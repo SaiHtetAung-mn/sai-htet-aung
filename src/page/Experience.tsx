@@ -1,3 +1,4 @@
+import { ExternalLink } from "lucide-react";
 import MotionContainer from "../components/MotionContainer";
 import MotionItem from "../components/MotionItem";
 import experienceInfo from "../config/experience.json";
@@ -18,7 +19,7 @@ const ExperiencePage = () => {
         <div className="relative">
           {/* Timeline Line */}
           <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-purple-500 via-pink-500 to-purple-500"></div>
-          
+
           {/* Timeline Items */}
           <div className="space-y-12">
             {experienceInfo.map((exp, index) => (
@@ -33,7 +34,7 @@ const ExperiencePage = () => {
                 <div className="absolute left-6 top-6 w-4 h-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full border-4 border-slate-900 shadow-lg">
                   <div className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 animate-ping opacity-20"></div>
                 </div>
-                
+
                 {/* Content Card */}
                 <div className="bg-white/5 backdrop-blur-sm rounded-xl p-8 border border-white/10 hover:border-purple-500/30 transition-all duration-300 shadow-xl">
                   {/* Period Badge */}
@@ -42,23 +43,26 @@ const ExperiencePage = () => {
                       {exp.from_date} - {exp.to_date}
                     </span>
                   </div>
-                  
+
                   {/* Title and Company */}
                   <div className="mb-4">
                     <h3 className="text-2xl font-bold mb-2 text-white">{exp.position}</h3>
-                    <p className="text-lg text-purple-400 font-medium">{exp.company}</p>
+                    <div className="flex gap-2 items-center">
+                      <p className="text-lg text-purple-400 font-medium">{exp.company}</p>
+                      <a href={exp.link ?? "#"} target="_blank"><ExternalLink className="text-gray-400" size={16} /></a>
+                    </div>
                   </div>
-                  
+
                   {/* Description */}
                   <p className="text-gray-300 leading-relaxed">{exp.description}</p>
-                  
+
                   {/* Decorative Elements */}
                   <div className="absolute top-4 right-4 w-16 h-16 bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-full blur-xl"></div>
                 </div>
               </MotionItem>
             ))}
           </div>
-          
+
           {/* Timeline End Indicator */}
           <div className="absolute left-6 bottom-0 w-4 h-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full border-4 border-slate-900 transform translate-y-6">
             <div className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 animate-pulse opacity-40"></div>

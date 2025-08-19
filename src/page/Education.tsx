@@ -2,6 +2,7 @@ import MotionContainer from "../components/MotionContainer";
 import MotionItem from "../components/MotionItem";
 import { GraduationCap, BadgeCheck } from "lucide-react";
 import certifications from "../config/certifications.json";
+import { ExternalLink } from "lucide-react";
 
 const EducationPage = () => {
 
@@ -35,11 +36,14 @@ const EducationPage = () => {
               <h3 className="text-xl font-semibold text-white">University</h3>
             </div>
             <div className="text-white text-lg font-medium mb-1">
-              Bachelor of Computer Science
+              Bachelor of Computer Science - Software Engineering
             </div>
-            <a href="https://www.uit.edu.mm/" target="_blank" className="text-gray-300 text-sm underline">
-              University of Information Technology, Yangon
-            </a>
+            <div className="flex gap-2 items-center">
+              <p className="text-gray-300 text-sm">
+                University of Information Technology, Yangon
+              </p>
+              <a href="https://www.uit.edu.mm/" target="_blank"><ExternalLink className="text-gray-400" size={16}/></a>
+            </div>
             <div className="text-purple-300 text-sm mt-2">2016 – 2023</div>
           </MotionItem>
 

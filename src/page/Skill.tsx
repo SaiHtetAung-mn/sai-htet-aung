@@ -1,81 +1,137 @@
 import MotionContainer from "../components/MotionContainer";
 import MotionItem from "../components/MotionItem";
-import { 
-  SiTypescript, 
-  SiNodedotjs, 
+import {
+  SiTypescript,
+  SiPython,
+  SiNodedotjs,
   SiNestjs,
   SiExpress,
   SiLaravel,
   SiReact,
+  SiVite,
   SiMui,
   SiTailwindcss,
   SiMongodb,
   SiPostgresql,
   SiDocker,
-  SiAmazonwebservices
+  SiAmazonwebservices,
+  SiMysql,
+  SiRedis,
+  SiLinux
 } from "react-icons/si";
+import { DiJava } from "react-icons/di";
+import type { IconType } from "react-icons";
 
-const skills = [
-  { name: 'TypeScript', level: 90, category: '', icon: SiTypescript },
-  { name: 'NodeJs', level: 88, category: 'Backend', icon: SiNodedotjs },
-  { name: 'NestJs', level: 88, category: 'Backend', icon: SiNestjs },
-  { name: 'ExpressJs', level: 88, category: 'Backend', icon: SiExpress },
-  { name: 'Laravel', level: 88, category: 'Backend', icon: SiLaravel },
-  { name: 'ReactJs', level: 88, category: 'Frontend', icon: SiReact },
-  { name: 'Material UI', level: 88, category: 'Frontend', icon: SiMui },
-  { name: 'Tailwind CSS', level: 88, category: 'Frontend', icon: SiTailwindcss },
-  { name: 'MongoDB', level: 88, category: 'Database', icon: SiMongodb },
-  { name: 'PostgreSql', level: 88, category: 'Database', icon: SiPostgresql },
-  { name: 'Docker', level: 88, category: 'Devops', icon: SiDocker },
-  { name: 'AWS', level: 88, category: 'Devops', icon: SiAmazonwebservices },
+interface Skill {
+  name: string;
+  level: number;
+  category: string;
+  icon: IconType;
+}
+
+interface GroupedSkills {
+  [category: string]: Skill[];
+}
+
+const skills: Skill[] = [
+  { name: 'TypeScript', level: 90, category: 'Languages', icon: SiTypescript },
+  { name: 'Python', level: 50, category: 'Languages', icon: SiPython },
+  { name: 'Java', level: 50, category: 'Languages', icon: DiJava },
+  { name: 'NodeJs', level: 90, category: 'Backend', icon: SiNodedotjs },
+  { name: 'ExpressJs', level: 95, category: 'Backend', icon: SiExpress },
+  { name: 'NestJs', level: 70, category: 'Backend', icon: SiNestjs },
+  { name: 'Laravel', level: 70, category: 'Backend', icon: SiLaravel },
+  { name: 'ReactJs', level: 90, category: 'Frontend', icon: SiReact },
+  { name: 'Vite', level: 90, category: 'Frontend', icon: SiVite },
+  { name: 'Material UI', level: 90, category: 'Frontend', icon: SiMui },
+  { name: 'Tailwind CSS', level: 80, category: 'Frontend', icon: SiTailwindcss },
+  { name: 'MongoDB', level: 90, category: 'Database', icon: SiMongodb },
+  { name: 'MySql', level: 80, category: 'Database', icon: SiMysql },
+  { name: 'PostgreSql', level: 80, category: 'Database', icon: SiPostgresql },
+  { name: 'Redis', level: 80, category: 'Database', icon: SiRedis },
+  { name: 'Linux', level: 70, category: 'DevOps', icon: SiLinux },
+  { name: 'Docker', level: 60, category: 'DevOps', icon: SiDocker },
+  { name: 'AWS', level: 60, category: 'DevOps', icon: SiAmazonwebservices },
 ];
 
-const SkillPage = () => {
+const SkillPage: React.FC = () => {
+  // Group skills by category
+  const groupedSkills: GroupedSkills = skills.reduce((acc: GroupedSkills, skill: Skill) => {
+    const category: string = skill.category || 'Other';
+    if (!acc[category]) {
+      acc[category] = [];
+    }
+    acc[category].push(skill);
+    return acc;
+  }, {});
+
   return (
     <MotionContainer id="skill">
-      <div className="max-w-6xl w-full pb-12">
+      <div className="max-w-4xl w-full pb-12">
         <MotionItem
           as="h2"
           variant
-          className="text-4xl md:text-5xl font-bold mb-8 text-center bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent"
+          className="text-4xl md:text-5xl font-bold mb-16 text-center bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent"
         >
           Skills & Expertise
         </MotionItem>
 
-        <div className="grid md:grid-cols-2 gap-8">
-          {skills.map((skill, index) => (
+        <div className="space-y-16">
+          {Object.entries(groupedSkills).map(([category, categorySkills]: [string, Skill[]], categoryIndex: number) => (
             <MotionItem
+              key={category}
               variant
-              className="group bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10 hover:border-purple-400/50 transition-all duration-300"
-              whileHover={{ scale: 1.02, y: -5 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: categoryIndex * 0.1 }}
             >
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center gap-3">
-                  <span className="text-2xl group-hover:scale-110 transition-transform duration-300">
-                    {<skill.icon/>}
-                  </span>
-                  <h3 className="text-xl font-semibold">{skill.name}</h3>
-                </div>
-                <span className="text-sm text-purple-400 bg-purple-400/20 px-3 py-1 rounded-full">
-                  {skill.category}
-                </span>
-              </div>
+              {/* Category Title */}
+              <h3 className="text-xl font-semibold text-gray-300 mb-8 uppercase tracking-wider">
+                {category}
+              </h3>
 
-              <div className="w-full bg-gray-700/50 rounded-full h-3 mb-2 overflow-hidden">
-                <MotionItem
-                  variant
-                  className="h-full bg-gradient-to-r from-purple-400 to-pink-400 rounded-full relative"
-                  initial={{ width: 0 }}
-                  animate={{ width: `${skill.level}%` }}
-                  transition={{ duration: 1, delay: index * 0.1 }}
-                >
-                  <div className="absolute inset-0 bg-white/20 animate-pulse rounded-full" />
-                </MotionItem>
-              </div>
+              {/* Skills List */}
+              <div className="space-y-6">
+                {categorySkills.map((skill: Skill, skillIndex: number) => (
+                  <MotionItem
+                    key={skill.name}
+                    variant
+                    className="group"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{
+                      duration: 0.5,
+                      delay: categoryIndex * 0.1 + skillIndex * 0.05
+                    }}
+                  >
+                    <div className="flex items-center justify-between mb-3">
+                      <div className="flex items-center gap-4">
+                        <skill.icon className="text-2xl text-gray-400 group-hover:text-purple-400 transition-colors duration-300" />
+                        <span className="text-lg font-medium text-white group-hover:text-gray-100 transition-colors">
+                          {skill.name}
+                        </span>
+                      </div>
+                      <span className="text-sm text-gray-500 font-mono">
+                        {skill.level}%
+                      </span>
+                    </div>
 
-              <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-400">Proficiency</span>
-                <span className="text-sm font-semibold text-purple-300">{skill.level}%</span>
+                    {/* Progress Bar */}
+                    <div className="w-full bg-gray-800 rounded-full h-1">
+                      <MotionItem
+                        variant
+                        className="h-full bg-gradient-to-r from-purple-400 to-pink-400 rounded-full"
+                        initial={{ width: 0 }}
+                        animate={{ width: `${skill.level}%` }}
+                        transition={{
+                          duration: 1,
+                          delay: categoryIndex * 0.2 + skillIndex * 0.1,
+                          ease: "easeOut"
+                        }}
+                      />
+                    </div>
+                  </MotionItem>
+                ))}
               </div>
             </MotionItem>
           ))}
